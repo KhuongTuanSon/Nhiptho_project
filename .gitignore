@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.idea/
+
+# Firebase credentials (KHONG DAY LEN GIT)
+backend/serviceAccountKey.json
+
+# Image captures
+captures/
+ai_worker/captures/
+*.jpg
+*.jpeg
+*.png
+!dashboard/static/peak_illustration.png

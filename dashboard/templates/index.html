@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Breathing Monitor — Giám sát nhịp thở</title>
+  <meta name="description" content="Hệ thống giám sát nhịp thở thời gian thực sử dụng AI và camera" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=3">
+</head>
+
+<body>
+
+  <!-- ===== Top Bar ===== -->
+  <nav class="top-bar">
+    <div class="top-bar-brand">
+      <div class="top-bar-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <path d="M12 6v12M6 12h12" />
+        </svg>
+      </div>
+      <span class="top-bar-title">Breathing Monitor</span>
+    </div>
+    <div class="top-bar-right">
+      <div class="connection-status">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-text">Đang kết nối…</span>
+      </div>
+      <span class="top-bar-clock" id="top-clock">--:--:--</span>
+    </div>
+  </nav>
+
+  <!-- ===== Main Content ===== -->
+  <main class="page">
+
+    <!-- 3-column grid: Stats | Hero BPM | Alerts -->
+    <div class="main-grid">
+
+      <!-- Left: Stats -->
+      <div class="stats-column">
+        <div class="glass-card stat-card stat-avg">
+          <span class="stat-label">Trung bình</span>
+          <span class="stat-value" id="stat-avg">--<span class="stat-unit"> BPM</span></span>
+        </div>
+        <div class="glass-card stat-card stat-min">
+          <span class="stat-label">Thấp nhất</span>
+          <span class="stat-value" id="stat-min">--<span class="stat-unit"> BPM</span></span>
+        </div>
+        <div class="glass-card stat-card stat-max">
+          <span class="stat-label">Cao nhất</span>
+          <span class="stat-value" id="stat-max">--<span class="stat-unit"> BPM</span></span>
+        </div>
+      </div>
+
+      <!-- Center: Hero BPM -->
+      <div class="glass-card hero-card">
+        <div style="align-self: stretch; margin: -32px -24px 10px -24px; padding: 16px 24px; border-bottom: 1px solid var(--border); background: rgba(0, 0, 0, 0.03); border-radius: var(--radius-lg) var(--radius-lg) 0 0;">
+          <h2 style="font-size: 12px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; text-align: left; margin: 0;">NHỊP THỞ THEO THỜI GIAN THỰC</h2>
+        </div>
+        <div class="bpm-gauge">
+          <div class="bpm-ring" id="bpm-ring"></div>
+          <div class="bpm-inner">
+            <span class="bpm-value" id="bpm-value">--</span>
+            <span class="bpm-unit">BPM</span>
+          </div>
+        </div>
+
+        <div class="status-badge normal" id="breath-status-badge">
+          <span id="breath-status">—</span>
+        </div>
+
+        <div class="hero-meta">
+          <p class="hero-meta-row"><span>Cập nhật</span><strong id="last-updated">—</strong></p>
+          <p class="hero-meta-row"><span>Nguồn</span><strong id="last-source">—</strong></p>
+        </div>
+      </div>
+
+      <!-- Right: Alert Log -->
+      <div class="glass-card alert-panel">
+        <div class="alert-panel-header">
+          <span class="alert-panel-title">Trạng thái</span>
+          <span class="alert-count" id="alert-count">0</span>
+        </div>
+        <ul class="alert-list" id="alert-list">
+          <li class="alert-empty">Chưa có dữ liệu</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Chart -->
+    <section class="glass-card chart-card">
+      <div class="chart-header">
+        <h2 class="chart-title">Lịch sử nhịp thở</h2>
+        <div class="chart-header-right">
+          <span class="chart-caption">100 lần đo gần nhất</span>
+          <button type="button" id="reset-zoom-btn" class="reset-zoom-btn">Reset zoom</button>
+        </div>
+      </div>
+      <canvas id="history-chart" height="100"></canvas>
+      <p class="chart-hint">Cuộn chuột để zoom · kéo để di chuyển · nhấp đôi để reset</p>
+    </section>
+
+
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hammerjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}?v=3"></script>
+</body>
+
+</html>
